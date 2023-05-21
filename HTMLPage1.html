@@ -9,10 +9,13 @@
     <p id="text0">please select either login or sign up</p>
     <p id="text1" hidden>username</p>
     <input type="text" id="username1" hidden />
-    <input type="button" value="Login" id="Login" onclick="Login_onClick()" hidden/>
+    <input type="button" value="Login" id="Login" onclick="Login_onClick()" hidden />
     <input type="button" value="Login!" id="unhid" onclick="Login_entry()" />
     <br>
     <br>
+    <input type="button" value="Back" id="Back" onclick="Back_onClick()" />
+    <br />
+    <br />
     <p id="text2" hidden>Password</p>
     <input type="text" id="password1" hidden />
     <input type="button" value="Sign_up" id="Sign_up" onclick="Signup_onClick()" />
@@ -46,7 +49,7 @@
 
         document.getElementById("username1").hidden = false;
         document.getElementById("password1").hidden = false;
-        
+
     }
     function Login_onClick() {
         document.getElementById("username1").hidden = false;
@@ -54,7 +57,7 @@
         document.getElementById("text0").hidden = true;
         document.getElementById("text1").hidden = false;
         document.getElementById("text2").hidden = false;
-    
+        document.getElementById("Back").hidden = false;
 
         var xmlhttp;
         xmlhttp = new XMLHttpRequest();
@@ -81,6 +84,52 @@
         }
 
     }
+    function Back_onClick() {
+        document.getElementById("username1").hidden = true;
+        document.getElementById("password1").hidden = true;
+        document.getElementById("text0").hidden = false;
+        document.getElementById("text1").hidden = true;
+        document.getElementById("text2").hidden = true;
+        document.getElementById("Login").hidden = false;
 
+        document.body.style.backgroundColor = "white";
 
- </script>
+    }
+
+    function Signup_onClick() {
+        document.getElementById("username1").hidden = false;
+        document.getElementById("password1").hidden = false;
+        document.getElementById("text0").hidden = true;
+        document.getElementById("text1").hidden = false;
+        document.getElementById("text2").hidden = false;
+        document.getElementById("Login").hidden = true;
+        document.getElementById("Back").hidden = false;
+
+        var xmlhttp;
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('GET', "Accounts-text-docs.txt", false)
+        xmlhttp.send();
+        let username2 = xmlhttp.responseText.split('/').join('<br/>');
+
+        let result = username2.includes(username1.value);
+        if (result == true) {
+            document.getElementById("SaS").innerText = "taken";
+
+        } else {
+            document.getElementById("SaS").innerText = "username accepted"
+            storage();
+            document.body.style.backgroundColor = "green";
+        }
+
+    }
+    function storage() {
+        localStorage.setItem('data', username1 + password1);
+    }
+    function remove() {
+        localStorage.removeItem("data");
+
+    }
+    function get() {
+        localStorage.getItem('data');
+    }
+</script>

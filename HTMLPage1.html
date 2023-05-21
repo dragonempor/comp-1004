@@ -1,0 +1,120 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+</head>
+<body onload="window_onload()">
+    <p id="text0">please select either login or sign up</p>
+    <p id="text1" hidden>username</p>
+    <input type="text" id="username1" hidden />
+    <input type="button" value="Login" id="Login" onclick="Login_onClick()" hidden/>
+    <input type="button" value="Login!" id="unhid" onclick="Login_entry()" />
+    <br>
+    <br>
+    <p id="text2" hidden>Password</p>
+    <input type="text" id="password1" hidden />
+    <input type="button" value="Sign_up" id="Sign_up" onclick="Signup_onClick()" />
+
+    <p id="SaS"></p>
+    <p id="SaS 2"> </p>
+
+</body>
+</html>
+<script>
+
+    var username, password;
+    var ctr;
+    var dection;
+    var path;
+    var fs;
+    var sw;
+    var sr;
+    var text;
+
+    function window_onload() {
+        ctr = 0;
+        //  username = "j"
+        //  password = "p"
+
+    }
+
+    function Login_entry() {
+        document.getElementById("Login").hidden = false;
+        document.getElementById("unhid").hidden = true;
+
+        document.getElementById("username1").hidden = false;
+        document.getElementById("password1").hidden = false;
+        
+    }
+    function Login_onClick() {
+        document.getElementById("username1").hidden = false;
+        document.getElementById("password1").hidden = false;
+        document.getElementById("text0").hidden = true;
+        document.getElementById("text1").hidden = false;
+        document.getElementById("text2").hidden = false;
+    
+
+        var xmlhttp;
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('GET', "Accounts-text-docs.txt", false)
+        xmlhttp.send();
+        let username2 = xmlhttp.responseText.split('/').join('<br/>');
+
+        let result = username2.includes(username1.value);
+        if (result == true) {
+            document.body.style.backgroundColor = "purple";
+            let result = username2.includes(password.value);
+            if (result == true) {
+                document.body.style.backgroundColor = "green";
+                document.getElementById("SaS").innerHTML = "entry permited";
+            }
+            else {
+                document.body.style.backgroundColor = "pink";
+                document.getElementById("SaS").innerHTML = " PASSED wrong ";
+            }
+        }
+        else {
+            document.body.style.backgroundColor = "red";
+            document.getElementById("SaS").innerHTML = "entry denied";
+        }
+
+    }
+
+    function Signup_onClick() {
+        document.getElementById("username1").hidden = false;
+        document.getElementById("password1").hidden = false;
+        document.getElementById("text0").hidden = true;
+        document.getElementById("text1").hidden = false;
+        document.getElementById("text2").hidden = false;
+        document.getElementById("Login").hidden = true;
+
+        var xmlhttp;
+        xmlhttp = new XMLHttpRequest();
+        xmlhttp.open('GET', "Accounts-text-docs.txt", false)
+        xmlhttp.send();
+        let username2 = xmlhttp.responseText.split('/').join('<br/>');
+
+        let result = username2.includes(username1.value);
+        if (result == true) {
+            document.getElementById("SaS").innerText = "taken";
+
+        } else {
+            document.getElementById("SaS").innerText = "username accepted"
+            storage();
+            document.body.style.backgroundColor = "green";
+        }
+
+    }
+    function storage() {
+        localStorage.setItem('data', username1 + password1);
+    }
+    function remove() {
+        localStorage.removeItem("data");
+
+    }
+    function get() {
+        localStorage.getItem('data');
+    }
+ </script>

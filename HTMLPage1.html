@@ -82,39 +82,5 @@
 
     }
 
-    function Signup_onClick() {
-        document.getElementById("username1").hidden = false;
-        document.getElementById("password1").hidden = false;
-        document.getElementById("text0").hidden = true;
-        document.getElementById("text1").hidden = false;
-        document.getElementById("text2").hidden = false;
-        document.getElementById("Login").hidden = true;
 
-        var xmlhttp;
-        xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('GET', "Accounts-text-docs.txt", false)
-        xmlhttp.send();
-        let username2 = xmlhttp.responseText.split('/').join('<br/>');
-
-        let result = username2.includes(username1.value);
-        if (result == true) {
-            document.getElementById("SaS").innerText = "taken";
-
-        } else {
-            document.getElementById("SaS").innerText = "username accepted"
-            storage();
-            document.body.style.backgroundColor = "green";
-        }
-
-    }
-    function storage() {
-        localStorage.setItem('data', username1 + password1);
-    }
-    function remove() {
-        localStorage.removeItem("data");
-
-    }
-    function get() {
-        localStorage.getItem('data');
-    }
  </script>
